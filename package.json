@@ -1,0 +1,36 @@
+{
+  "name": "codpoint",
+  "version": "0.0.1",
+  "description": "utf8, utf16, wtf8, and wtf16 decoding without strings",
+  "main": "dist/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "build": "rollup src/index.js -f cjs -m inline -o dist/index.js -e stream",
+    "lint": "eslint src",
+    "test": "npm run build && TAP_RCFILE=.taprc tap test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catbeef/codpoint.git"
+  },
+  "keywords": [
+    "utf8",
+    "utf16",
+    "utf32",
+    "wtf8",
+    "wtf16",
+    "decode",
+    "codepoints"
+  ],
+  "author": "darien maillet valentine",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/catbeef/codpoint/issues"
+  },
+  "homepage": "https://github.com/catbeef/codpoint#readme",
+  "devDependencies": {
+    "eslint": "^4.6.0",
+    "rollup": "^0.49.2",
+    "tap": "^10.7.2"
+  }
+}
