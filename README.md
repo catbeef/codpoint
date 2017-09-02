@@ -92,4 +92,5 @@ having no BOM; it’d unambiguously be a ZWNBSP.
 ## errors
 
 Various rather specific error constructors like `InvalidUTF8ContinuationError`
-are also exported.
+are also exported. They’ll tell you what went wrong, but line/column is not
+tracked.
