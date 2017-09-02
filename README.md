@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/catbeef/codpoint.svg)](https://travis-ci.org/catbeef/codpoint)
+[![Coverage Status](https://coveralls.io/repos/github/catbeef/codpoint/badge.svg?branch=master)](https://coveralls.io/github/catbeef/codpoint?branch=master)
+[![npm version](https://badge.fury.io/js/codpoint.svg)](https://badge.fury.io/js/codpoint)
+
 # codpoint
 
 This lib exposes a set of transform streams that consume raw buffer chunks and
