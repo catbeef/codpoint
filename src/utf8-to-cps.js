@@ -109,6 +109,8 @@ class UTF8ToCPs extends Transform {
         // Initial byte of four-byte encoded codepoint
 
         if (a >> 3 === 0b11110) {
+          if (a > 0xF4) throw new errors.InvalidUTF8ByteError(a);
+
           if (remainingByteCount < 3) {
             this.reservedLength = remainingByteCount + 1;
             this.reservedTotal = 4;
