@@ -34,7 +34,7 @@ So the main purpose of this lib is to eliminate the pointless steps there.
 
 There are a few other distinctions:
 
-- the native decoder will output the `\uFFFD` replacement character when it hits
+- the native decoder will output the `\uFFFD` replacement character in place of
   ill-formed encoding sequences, but because this lib is meant for internal
   processing rather than user-facing text handling, these streams instead will
   throw errors for ill-formed sequences (with certain exceptions permitted when
