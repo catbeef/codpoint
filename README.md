@@ -18,7 +18,8 @@ Naturally one can do some of this pretty easily with built-in decoding:
     fs.createReadStream(filename, 'utf8').pipe(new Writable({
       write: (chunk, enc, done) => {
         const cps = Uint32Array.from(
-          Array.from(chunk).map(char => char.codePointAt(0))
+          String(chunk),
+          char => char.codePointAt(0)
         );
     
         /*... congrats u got em ...*/
@@ -45,6 +46,14 @@ There are a few other distinctions:
   they were valid unicode scalar values
 - handling of BOM is configurable for UTF8 and detecting endianness of utf16
   from the BOM is supported
+
+> There is a little naive benchmark in the test dir; res looked like this for me
+> on node 8:
+> 
+> ```
+> native decode utf8 to CPs: 100 iterations over all unicode scalars averaged 99.78330918ms
+> codpoint decode utf8 to CPs: 100 iterations over all unicode scalars averaged 43.749709050000014ms
+> ```
 
 ## usage
 
