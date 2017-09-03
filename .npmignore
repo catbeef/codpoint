@@ -1,1 +1,9 @@
+.eslintrc
+.nyc_output
+.taprc
+.travis.yml
+coverage
+node_modules
+package-lock.json
 test
+write-scalars.js

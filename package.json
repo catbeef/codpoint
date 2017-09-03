@@ -1,6 +1,6 @@
 {
   "name": "codpoint",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "utf8, utf16, wtf8, and wtf16 decoding without strings",
   "main": "dist/index.js",
   "module": "src/index.js",
