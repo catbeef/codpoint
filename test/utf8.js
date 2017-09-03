@@ -11,6 +11,7 @@ const {
   OrphanedUTF8ContinuationByteError,
   OverlongUTF8EncodingError,
   UTF8ToCPs,
+  WTF8ToCPs
 } = require('../dist');
 
 const SCALARS_PATH = path.join(
@@ -253,4 +254,27 @@ tap.test(`decodes all unicode scalars in UTF8`, tap => {
     .createReadStream(SCALARS_PATH)
     .pipe(stream)
     .pipe(target);
+});
+
+// WTF8
+
+tap.test(`wtf8 permits sequences that decode to surrogate codepoints`, tap => {
+  const chunks = [];
+  const stream = new WTF8ToCPs();
+
+  stream.on('data', chunk => chunks.push(chunk));
+
+  stream.on('finish', () => {
+    const out = Buffer.concat(chunks);
+
+    tap.equal(out.length, surrogates.length * 4);
+
+    for (let i = 0; i < out.length; i += 4) {
+      tap.equal(out.readUInt32LE(i), surrogates[i / 4]);
+    }
+
+    tap.end();
+  });
+
+  stream.end(Buffer.concat(wtf8Surrogates));
 });

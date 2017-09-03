@@ -32,7 +32,8 @@ class UTF16ToCPs extends Transform {
       } else if (reservedLength % 2) {
         done(new errors.AbruptUTF16CodeUnitEOFError(...reserved.slice(-1)));
       } else if (this.wtf) {
-        done(undefined, Buffer.from(Uint32Array.of(reserved[readMethod](0))));
+        const end = Buffer.from(Uint32Array.of(reserved[readMethod](0)).buffer);
+        done(undefined, end);
       } else {
         done(new errors.AbruptUTF16SurrogateEOFError(reserved[readMethod](0)));
       }
@@ -57,9 +58,14 @@ class UTF16ToCPs extends Transform {
 
     if (!this.pastBOM) {
       if (utf16Length < 2) {
-        this.reserved = utf16Buff;
-        this.reservedLength = utf16Length;
-        done();
+        if ([ 0xFE, 0xFF ].includes(utf16Buff[i])) {
+          this.reserved = utf16Buff;
+          this.reservedLength = utf16Length;
+          done();
+          return;
+        }
+
+        done(new errors.UTF16MissingBOMError());
         return;
       }
 
@@ -112,11 +118,10 @@ class UTF16ToCPs extends Transform {
           // Valid continuation
 
           if (b >> 10 === 0b110111) {
-            const h = a ^ 0b1101100000000000;
-            const l = b ^ 0b1101110000000000;
+            const h = a & 0b1111111111;
+            const l = b & 0b1111111111;
 
-            utf32Arr[j++] = 0b10000000000000000 | h << 10 | l;
-
+            utf32Arr[j++] = 0x10000 + (h << 10 | l);
             continue;
           }
 
